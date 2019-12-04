@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>EXIT</title>
+    <script src="../docs/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../docs/js/examples-base.js"></script>
+    <script type="text/javascript" src="../docs/js/highlight.min.js"></script>
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
+    <link rel="stylesheet" type="text/css" href="../docs/css/examples-base.css" />
+    <script>
+        var HOME_PATH = '../docs';
+    </script>
+</head>
+<body>
+
+<!-- @category Overlay/Infowindow -->
+
+<div id="wrap" class="section" style="display:inline-block;">
+    <h2>EXIT</h2>
+    <p>네이버 그린팩토리 위치에 기본 마커를 표시하는 예제입니다.</p>
+    <a href="login.html"><button>로그인</button></a>
+    <a href="signup.html"><button>회원가입</button></a>
+    <div id="map" style="width:1000px;height:500px;"></div>
+    <!-- <code id="snippet" class="snippet"></code> -->
+</div>
+<iframe src="read.html" frameborder="1" class="iframe" width=400px height=500px></iframe>
+
+<script id="code">
+var map = new naver.maps.Map('map', {
+    center: new naver.maps.LatLng(35.176117, 126.905834),
+    zoom: 10
+});
+
+var marker = new naver.maps.Marker({
+    position: new naver.maps.LatLng(35.176117, 126.905834),
+    map: map
+});
+
+var contents = [
+    '<div class="iw_inner">',
+    '<h2>전남대학교</h2>',
+    '<p>게시글을 보여줍니다.</p>'
+].join('');
+
+var infowindow = new naver.maps.InfoWindow({
+    content: contents,
+    borderWidth: 1,
+    backgroundColor: "#eee",
+    anchorColor: "#eee",
+
+});
+
+naver.maps.Event.addListener(marker, "click", function(e) {
+    if (infowindow.getMap()) {
+        infowindow.close();
+    } else {
+        infowindow.open(map, marker);
+    }
+});
+
+
+content: content;
+</script>
+
+</body>
+</html>
