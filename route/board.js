@@ -98,16 +98,17 @@ var upload = multer({
 //데이터베이스에 글 저장
 router.post('/write', upload.single('file'), function(req, res, next) {
     var body = req.body;
+    var location =req.body.location;
     var title = req.body.title;
     var writer = req.session.no;
     var content = req.body.content;
-    var genre = req.body.genre.join(',');
+    
     var userfile = req.file;
     console.log("file: " + req.file);
     //var filename = file.filename();
 
     db.beginTransaction(function(err) {
-        db.query('insert into post(postTitle, postContents, genre, file, userNum, createAt) values(?, ?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, genre, upload.filename, writer], function(err) {
+        db.query('insert into post(postTitle, postContents, file, userNum, createAt) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, upload.filename, writer], function(err) {
             if (err) {
                 console.log(err);
                 db.rollback(function(err) {

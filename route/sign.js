@@ -1,14 +1,13 @@
 var express = require('express');
-var db = require('../dbconnection');
+var db = require('./dbconnection');
 var fs = require('fs');
 
 var router = express.Router();
 
-
 // var bcrypt = require('bcrypt');
 
 router.get('/', function (req, res) { //localhost:3000
-    res.render('MAIN', {isLogined: req.session.logined, nickname: req.session.name});
+    res.render('main', {isLogined: req.session.logined, nickname: req.session.name});
 });
 
 
@@ -18,27 +17,27 @@ router.get('/join', function(req, res) {
 
     res.writeHead(200, {"Content-Type":"text/html"});
 
-    fs.readFile("./views/SIGN_UP.html", (err, data) => {
+    fs.readFile("./views/signup.html", (err, data) => {
 
         if (err) throw (err);
         res.end(data, 'utf-8');
     });
 });
 
-router.post('/join', function(req, res, next) {
+router.post('/signup', function(req, res, next) {
     var body = req.body;
     var name = req.body.name;
-    var id = req.body.id;
     var password = req.body.pw;
     var email = req.body.email;
     var phone = req.body.phone;
     var nickname = req.body.nickname;
-    var interest = req.body.genre.join(',');
-
-    db.query('insert into user (userId, userPassword, userName, userEmail, userPhone, userNickname, interest) values(?, ?, ?, ?, ?, ?, ?)', [id, password, name, email, phone, nickname, interest], function(err, rows) {
-        if (err) {
-            console.log(err)};
+      
+    db.query('insert into user ( name,email, pw,nickname, phone_number) values(?, ?, ?, ?)',
+     [name, email, password, nickname, phone], function(err, rows) {
+        if (err || (pw !== pwCheck)) {
+        console.log(err)};
         console.log("rows :" + rows);
+        res.json({success: false, msg: 'password가 일치하지 않습니다.'});
         res.redirect('/auth/login');
     });
 });
@@ -46,14 +45,14 @@ router.post('/join', function(req, res, next) {
 //로그인
 router.get('/login', function(req, res) {
     var session = req.session;
-    res.render('SIGN_IN');
+    res.render('login');
 });
 
 router.post('/login', function(req, res) {
-    var userId = req.body.id;
+    var userEmail = req.body.email;
     var password = req.body.pw;
 
-    db.query('select * from user where userId = ?', [userId], function(err, rows) {
+    db.query('select * from user where email = ?', [userEmail], function(err, rows) {
         if (err) throw(err);
         else {
             if (rows.length === 0) {
@@ -69,12 +68,12 @@ router.post('/login', function(req, res) {
                     console.log(req.session.no);
                     req.session.save(function() {
                         res.redirect('/');
-                    })
+                    });
                 }
             }
         }
-    })
-})
+    });
+});
 
 //로그아웃
 router.get('/logout', function(req, res, next) {
@@ -95,6 +94,6 @@ router.get('/logout', function(req, res, next) {
         console.log('로그인 안됨');
         res.redirect('/login');
     }
-})
+});
 
 module.exports = router;
