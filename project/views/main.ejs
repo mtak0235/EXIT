@@ -19,33 +19,34 @@
 <!-- @category Overlay/Infowindow -->
 
 <div id="wrap" class="section" style="display:inline-block;">
-    <h2>EXIT</h2>
-    <p>네이버 그린팩토리 위치에 기본 마커를 표시하는 예제입니다.</p>
-    <a href="login.html"><button>로그인</button></a>
-    <a href="signup.html"><button>회원가입</button></a>
+    <img alt= "exit 로고" src = "../docs/img/logo.jpg" height="200px">
+    <p>EXIT는 지역민들을 위한 소셜 네트워크 서비스를 제공합니다.</p>
+    <div id = "user">
+    <a href="login.ejs"><button>로그인</button></a>
+    <a href="signup.ejs"><button>회원가입</button></a>
+    </div>
     <div id="map" style="width:1000px;height:500px;"></div>
-    <!-- <code id="snippet" class="snippet"></code> -->
 </div>
 <iframe src="read.html" frameborder="1" class="iframe" width=400px height=500px></iframe>
 
-<script id="code">
-var map = new naver.maps.Map('map', {
+<script>
+let map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(35.176117, 126.905834),
     zoom: 10
 });
 
-var marker = new naver.maps.Marker({
+let marker = new naver.maps.Marker({
     position: new naver.maps.LatLng(35.176117, 126.905834),
     map: map
 });
 
-var contents = [
+let contents = [
     '<div class="iw_inner">',
     '<h2>전남대학교</h2>',
     '<p>게시글을 보여줍니다.</p>'
 ].join('');
 
-var infowindow = new naver.maps.InfoWindow({
+let infowindow = new naver.maps.InfoWindow({
     content: contents,
     borderWidth: 1,
     backgroundColor: "#eee",
@@ -61,6 +62,9 @@ naver.maps.Event.addListener(marker, "click", function(e) {
     }
 });
 
+if(!isLoggedIn) {
+    $('#user').html('<a href="position.html"><button>글쓰기</button></a>');
+}
 
 content: content;
 </script>
