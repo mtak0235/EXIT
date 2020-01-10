@@ -8,4 +8,4 @@ exports var db = mysql.createConnection({
     database:'exit_db'//접속할 db
     });
 
- 
+   

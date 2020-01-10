@@ -25,7 +25,7 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
     db.beginTransaction(function(err) {
         db.query('update post set hit = hit + 1 where postId=?', [postId], function(err) {
             if (err) {
-                console.log(err);
+                console.log(err);  
                 db.rollback(function () {
                     console.error('rollback error1');
                 });
