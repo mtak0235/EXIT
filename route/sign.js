@@ -39,7 +39,7 @@ router.post('/signup', function(req, res, next) {
         console.log("rows :" + rows);
         res.json({success: false, msg: 'password가 일치하지 않습니다.'});
         res.redirect('/auth/login');
-    });
+    });   
 });
 
 //로그인
