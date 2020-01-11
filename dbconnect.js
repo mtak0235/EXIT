@@ -1,6 +1,7 @@
-exports var mysql = require('mysql');
+var mysql = require('mysql');
 
-exports var db = mysql.createConnection({
+var database ={}; 
+ database.db = mysql.createConnection({
     host :'localhost', // 서버 로컬 ip
     port:3306, //mysql 기본 포트번호는 3306
     user:'root', //계정 id
@@ -8,4 +9,6 @@ exports var db = mysql.createConnection({
     database:'exit_db'//접속할 db
     });
 
+    module.exports = database;
    
+ 
