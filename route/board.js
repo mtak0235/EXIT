@@ -1,5 +1,14 @@
 var express = require('express');
-var db = require('../dbconnection');
+var mysql = require('mysql');
+
+var database ={}; 
+var db = mysql.createConnection({
+    host :'localhost', // 서버 로컬 ip
+    port:3306, //mysql 기본 포트번호는 3306
+    user:'root', //계정 id
+    password:'1004tmk.',//계정pw
+    database:'exit_db'//접속할 db
+    });
 var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
@@ -8,7 +17,7 @@ var router = express.Router();
 
 //목록
 router.get('/', function(req, res) { //localhost:3000/board 일 때
-    db.query('select postId, postTitle, hit, genre, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, userNickname from post, user where userNum = No', function(err, rows) {
+        db.query('select postId, postTitle, hit, genre, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, userNickname from post, user where userNum = No', function(err, rows) {
         if (err) {
             console.log(err);
         }
@@ -22,30 +31,30 @@ router.get('/detail/:postId', function(req, res, next) { //localhost:3000/board/
     var postId = req.params.postId;
     console.log("postId : " + postId);
 
-    db.beginTransaction(function(err) {
-        db.query('update post set hit = hit + 1 where postId=?', [postId], function(err) {
+        db.beginTransaction(function(err) {
+            db.query('update post set hit = hit + 1 where postId=?', [postId], function(err) {
             if (err) {
                 console.log(err);  
-                db.rollback(function () {
+                    db.rollback(function () {
                     console.error('rollback error1');
                 });
             }
-            db.query('select postId, postTitle, postContents, genre, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, hit, file, userNickname from post, user where userNum = no and postId=?', [postId], function(err, post) {
+                db.query('select postId, postTitle, postContents, genre, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, hit, file, userNickname from post, user where userNum = no and postId=?', [postId], function(err, post) {
                 if (err) {
                     console.log(err);
-                    db.rollback(function () {
+                        db.rollback(function () {
                         console.error('rollback err2');
                     })
                 }
-                db.query('select commentNo, postId, userNum, contents, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, userNickname from comment, user where userNum=no and postId = ?', [postId], function(err, comment) {
+                    db.query('select commentNo, postId, userNum, contents, DATE_FORMAT(createAt, "%Y % c/%e %r") as createAt, userNickname from comment, user where userNum=no and postId = ?', [postId], function(err, comment) {
                     if (err) {
                         console.log(err);
-                        db.rollback(function() {
+                            db.rollback(function() {
                             console.error('rollback err3');
                         })
                     }
                 else {
-                    db.commit(function (err) {
+                        db.commit(function (err) {
                         if (err) console.log(err);
                         console.log("row : " + post);
                         res.render('detail', {title: post[0].postTitle, post: post, comment: comment, isLogined: req.session.logined});
@@ -63,7 +72,7 @@ router.post('/:postId/process/comment', function(req, res) {
     var content = req.body.content;
     var writer = req.session.no;
 
-    db.query('insert into comment (postId, contents, userNum, createAt) values (?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))' , [postId, content, writer], function (err, comment) {
+        db.query('insert into comment (postId, contents, userNum, createAt) values (?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))' , [postId, content, writer], function (err, comment) {
         if (err) throw(err);
         res.redirect('/board/detail/' + postId);
     })
@@ -75,8 +84,7 @@ router.post('/:postId/process/comment', function(req, res) {
 //쓰기
 router.get('/write', function(req, res, next) {
         res.render('write', {isLogined: req.session.logined, nickname: req.session.name});
-    
-})
+});
 
 
 
@@ -97,20 +105,21 @@ var upload = multer({
 
 //데이터베이스에 글 저장
 router.post('/write', upload.single('file'), function(req, res, next) {
-    var body = req.body;
-    var location =req.body.location;
-    var title = req.body.title;
-    var writer = req.session.no;
-    var content = req.body.content;
-    
-    var userfile = req.file;
-    console.log("file: " + req.file);
-    //var filename = file.filename();
+    var latitude = req.body.latitude;
+    var longitude =req.body.longitude;
+    var text = req.body.text;
+   
+    var email = req.session.email;
+   
 
     db.beginTransaction(function(err) {
-        db.query('insert into post(postTitle, postContents, file, userNum, createAt) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [title, content, upload.filename, writer], function(err) {
-            if (err) {
-                console.log(err);
+
+        db.query('insert into post(context,uid ,longitude,latitude,create_at) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', 
+        [text,email,longitude,latitude],
+         function(err) {
+             console.log('실행');
+                        if (err) {
+                        console.log(err);
                 db.rollback(function(err) {
                     console.error("rollback error1");
                 }); 
@@ -136,7 +145,6 @@ router.post('/write', upload.single('file'), function(req, res, next) {
         });
     });
 
-console.log(genre);
 
 });
 
