@@ -105,7 +105,7 @@ router.post('/write', function(req, res, next) {
                 }); 
             }
             console.log('정상작동');
-           res.redirect('/');
+           res.render('main');
         });
 });
 

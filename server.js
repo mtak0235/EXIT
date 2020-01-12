@@ -17,12 +17,16 @@ var app = express();
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '/views'));
-app.set('view engine', 'ejs'); 
+app.set('view engine', 'ejs');
 
-db.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected");
+var db = mysql.createConnection({
+host:'168.131.35.105',
+port:3306,
+user:'luda',
+password:'1004tmk.',
+database:'exit_db'
 });
+
 
 app.use(cookieParser());
 app.use(session({

@@ -4,7 +4,8 @@
   "description": "This is a second project of team BMW !",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,8 @@
     "mysql": "^2.17.1",
     "server-static": "^2.0.5",
     "static-server": "^2.2.1"
+  },
+  "directories": {
+    "doc": "docs"
   }
 }
