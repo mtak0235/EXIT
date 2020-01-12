@@ -24,11 +24,20 @@
     <div id = "user">
     <a href="/login"><button>로그인</button></a>
     <a href="/signup"><button>회원가입</button></a>
+   
     </div>
     <div id="map" style="width:1000px;height:500px;"></div>
 </div>
-<iframe src="/read" frameborder="1" class="iframe" width=400px height=500px></iframe>
-
+<iframe src="/read?lat=35.176117&lon=126.905834" frameborder="1" class="iframe" width=400px height=500px></iframe>
+ ////position.ejs 참고해서 아래를 복붙한  post방식으로 
+ axios.post("/sign/read",{ 
+    latitude : lat,
+    longitude : lng,
+   }).then(res =>{
+    console.log('upload board');                     
+}).catch(function (error) {
+    alert(error);
+  });      latitude 랑 longitude  body에 담아 보내주세요 작업하고 이 글 지워주세여
 <script>
 let map = new naver.maps.Map('map', {
     center: new naver.maps.LatLng(35.176117, 126.905834),
@@ -62,8 +71,8 @@ naver.maps.Event.addListener(marker, "click", function(e) {
     }
 });
 
-if(!isLoggedIn) {
-    $('#user').html('<a href="position.html"><button>글쓰기</button></a>');
+if(isLoggedIn) {                       
+    $('#user').html('<a href="position.ejs"><button>글쓰기</button></a>');
 }
 
 content: content;

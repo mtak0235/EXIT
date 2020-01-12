@@ -1,6 +1,5 @@
 var express = require('express');
 var mysql = require('mysql');
-
 var database ={}; 
 var db = mysql.createConnection({
     host :'localhost', // 서버 로컬 ip
@@ -11,7 +10,6 @@ var db = mysql.createConnection({
     });
 var fs = require('fs');
 var ejs = require('ejs');
-
 var router = express.Router();
 
 //목록
@@ -22,7 +20,7 @@ router.get('/', function(req, res) {
         }
         console.log(rows);
         res.render('notice', {rows: rows, isLogined: req.session.logined, nickname: req.session.name});
-    })
+    });
 
 });
 
@@ -44,14 +42,14 @@ router.get('/read/:noticeNo', function(req, res, next) {
                     console.log(err);
                     db.rollback(function () {
                         console.error('rollback err2');
-                    })
+                    });
                 }
                 else {
                     db.commit(function (err) {
                         if (err) console.log(err);
                         console.log("row : " + rows);
                         res.render('read', {title: rows[0].noticeTitle, rows: rows});
-                    })
+                    });
                 }
             
             });
