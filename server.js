@@ -39,24 +39,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// app.get('/', function (req, res) {
-//     var user = req.session.id;
-//     res.render('main', {user: user});
-// });
-
 var userRouter = require('./route/sign');
 var boardRouter = require('./route/board');
 var noticeRouter = require('./route/notice');
-var uploadRouter = require('./route/upload');
 
 app.use("/", userRouter);
 app.use("/sign", userRouter);
 app.use("/board", boardRouter);
 app.use("/notice", noticeRouter);
 
-// app.use("/", noticeRouter);
-
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port' + app.get('port'));
-    console.log(process.env.NODE_PORT);
-});
+  });

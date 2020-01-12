@@ -6,9 +6,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../docs/css/examples-base.css" />
-
+    <title><%= title %></title>
 </head>
 <body>
-    글 목록
+    <h1><%= title %></h1>
+    <table border="2">
+
+        <%
+      for(var i = 0; i< rows.length ; i++)
+      {
+      %>
+      <tr>
+        <td><%=rows[i].context%></td>
+        <td><%=rows[i].email%></td>
+     </tr>
+      <%
+      }
+      %>
+    </table>
 </body>
 </html>
