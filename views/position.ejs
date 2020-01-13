@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Geolocation HTML5 API 활용하기</title>
-    <script src="/static/js/jquery-1.9.1.js"></script>
-    <script type="text/javascript" src="/static/js/examples-base.js"></script>
-    <script type="text/javascript" src="/static/js/highlight.min.js"></script>
+    <title>글쓰기</title>
+    <script src="../docs/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="../docs/js/examples-base.js"></script>
+    <script type="text/javascript" src="../docs/js/highlight.min.js"></script>
     <script type="text/javascript"
         src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/examples-base.css" />
+    <link rel="stylesheet" type="text/css" href="../docs/css/examples-base.css" />
     <script>
-        var HOME_PATH = '/static';
+        var HOME_PATH = '../docs';
     </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -40,7 +40,6 @@
         });
 
         var infowindow = new naver.maps.InfoWindow({
-            
         });
 
         function onSuccessGeolocation(position) {
@@ -72,7 +71,7 @@
                 let location = new naver.maps.LatLng(lat, lng);
                 console.log(e.coord.lat() + ',' + e.coord.lng());
                 infowindow.setPosition(location);
-                infowindow.setContent('<textarea id="text"></textarea><div ><button id="write" type="submit" style="width:30px;height:15px"></button></div>');
+                infowindow.setContent('<div class="iw_inner"><textarea id="text" rows="7" cols="60"></textarea><br><button id="write" type="submit">작성</button></div>');4
                 infowindow.open(map);
                 document.getElementById("write").addEventListener("click",(e)=>{
                     axios.post("/board/write",{ 
