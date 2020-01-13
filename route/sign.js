@@ -80,6 +80,7 @@ router.get('/logout', function (req, res, next) {
             console.log('세션 삭제 성공');
             res.redirect('/');
         });
+        console.log(req.session);
     }
     else {
         console.log('로그인 안됨');
