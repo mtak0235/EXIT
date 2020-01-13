@@ -117,12 +117,6 @@ router.get('/read', function (req, res, next) {
 
     // });
 });
-router.get('/position', function (req, res, next) {
-    res.render('position');
-});
-router.get('/write', function (req, res, next) {
-    res.render('write');
-});
 
 
 module.exports = router;

@@ -10,16 +10,10 @@ var cors = require('cors');
 var router = express.Router();
 
 //목록
-router.get('/', function (req, res) { //localhost:3000/board 일 때
-
-    db.query('select * from board  where userNum = No', function (err, rows) {
-        if (err) {
-            console.log(err);
-        }
-        console.log(rows);
-        res.render('board', { rows: rows, isLogined: req.session.logined, nickname: req.session.nickname });
-    });
+router.get('/', function (req, res) { //localhost:3000/write 일 때
+    res.render('position');
 });
+
 
 //읽기
 router.get('/detail/:postId', function (req, res, next) { //localhost:3000/board/detail/:postId
