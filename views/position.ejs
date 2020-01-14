@@ -70,17 +70,20 @@
                 let lat = e.coord.lat(); //클릭한 위치로 위도 변경
                 let lng = e.coord.lng(); //클릭한 위치로 경도 변경
                 let location = new naver.maps.LatLng(lat, lng);
+                
                 console.log(e.coord.lat() + ',' + e.coord.lng());
                 infowindow.setPosition(location);
                 infowindow.setContent('<div class="iw_inner"><h2>글을 작성하세요.</h2><textarea id="text" rows="7" cols="60"></textarea><br><button id="write" type="submit">저장</button></div>');
                 infowindow.open(map);
                 document.getElementById("write").addEventListener("click",(e)=>{
-                    axios.post("/board/write",{ 
+                   
+                    axios.post("/write",{ 
                         latitude : lat,
                         longitude : lng,
                         text : document.getElementById('text').value
                     }).then(res =>{
-                        alert("등록 성공");                        
+                        alert("등록 성공");  
+                        window.location.href = '/'                      
                     }).catch(function (error) {
                         alert(error);
                       });

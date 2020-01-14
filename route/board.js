@@ -67,20 +67,16 @@ router.get('/detail/:postId', function (req, res, next) { //localhost:3000/board
     });
 }); */
 
-//쓰기
-router.get('/write', function (req, res, next) {
-    res.render('/', { isLogined: req.session.logined, nickname: req.session.name });  // write를 /로 랜더 했어요.
-});
+
 
 //데이터베이스에 글 저장
-router.post('/write', function (req, res, next) {
+router.post('/', function (req, res, next) {
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
     var text = req.body.text;
     var email = req.session.email;
 
     console.log('여기' + req.session);
-
     console.log(email);
     console.log(longitude);
     console.log(latitude);
@@ -93,7 +89,7 @@ router.post('/write', function (req, res, next) {
             });
         }
         console.log('정상작동');
-        res.render('main');
+        res.status(200).end();
     });
 });
 
