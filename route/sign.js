@@ -1,5 +1,5 @@
 var express = require('express');
-var db = require("../dbconnect")
+var db = require("../dbconnect");
 var router = express.Router();
 
 router.get('/', function (req, res) { //localhost:3000
@@ -37,6 +37,7 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
+    console.dir(req.body);
     console.log('ㅇㄹ' + req.body);
     var userEmail = req.body.email;
     var password = req.body.pw;
@@ -44,6 +45,7 @@ router.post('/login', function (req, res) {
     db.query('select * from user where email = ?', [userEmail], function (err, rows) {
         if (err) throw (err);
         else {
+        
             if (rows.length === 0) {
                 res.json({ success: false, msg: '해당 유저가 존재하지 않습니다.' });
             }
@@ -98,25 +100,25 @@ router.get('/read', function (req, res, next) {
     var po_lat = req.query.lat;        //req.body.latitude;
     var context;
 
-    // var main_board = db.query('select context,email,latitude,longitude from board ', function(err, rows) {
-    //     if(err) console.log(err);
-    //     var  result =[];
-    //     for (i=0; i<rows.length ; i++){
+    var main_board = db.query('select context,email,latitude,longitude from board ', function(err, rows) {
+        if(err) console.log(err);
+        var  result =[];
+        for (i=0; i<rows.length ; i++){
 
-    //         var latitude = rows[i].latitude;
-    //         var longitude = rows[i].longitude;       
-    //         if ( (latitude-po_lat)^2+(longitude-po_lon)^2<(0.0015333685)^2){
+            var latitude = rows[i].latitude;
+            var longitude = rows[i].longitude;       
+            if ( (latitude-po_lat)^2+(longitude-po_lon)^2<(0.0015333685)^2){
 
-    //             result.push({
-    //                 context:rows[i].context,
-    //                 email:rows[i].email
-    //             });
-    //             console.log('rows:'+rows);
-    //         }
-    //     }       
-    //     res.render('read', {title:'내위치 주변의 게시글',rows:result});
+                result.push({
+                    context:rows[i].context,
+                    email:rows[i].email
+                });
+               
+            }
+        }       
+        res.render('read', {title:'내위치 주변의 게시글',rows:result});
 
-    // });
+    });
 });
 
 
