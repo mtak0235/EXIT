@@ -12,6 +12,6 @@ db.connect((err) => {
    if (err) return console.log(err);
    console.log("성공");
 })
-module.exports = db
+module.exports = db;
    
  

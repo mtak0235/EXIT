@@ -2,7 +2,7 @@ var express = require('express');
 var mysql = require('mysql');
 
 var database = {};
-var db = require("../dbconnect")
+var db = require("../dbconnect");
 var path = require('path');
 var fs = require('fs');
 var multer = require('multer');
@@ -15,7 +15,7 @@ router.get('/', function (req, res) { //localhost:3000/write 일 때
 });
 
 
-//읽기
+/* //읽기
 router.get('/detail/:postId', function (req, res, next) { //localhost:3000/board/detail/:postId
     var postId = req.params.postId;
     console.log("postId : " + postId);
@@ -50,10 +50,10 @@ router.get('/detail/:postId', function (req, res, next) { //localhost:3000/board
                 }
             });
         });
-    });
+    }); */
 
 
-    //댓글 쓰기
+    /* //댓글 쓰기
     router.post('/:postId/process/comment', function (req, res) {
         var body = req.body;
         var postId = req.params.postId;
@@ -65,7 +65,7 @@ router.get('/detail/:postId', function (req, res, next) { //localhost:3000/board
             res.redirect('/board/detail/' + postId);
         });
     });
-});
+}); */
 
 //쓰기
 router.get('/write', function (req, res, next) {
@@ -97,7 +97,7 @@ router.post('/write', function (req, res, next) {
     });
 });
 
-//수정
+/* //수정
 router.get('/edit/:postId', function (req, res, next) {
     var postId = req.params.postId;
 
@@ -154,7 +154,7 @@ router.get('/delete/:postId', function (req, res, next) {
             });
         });
     });
-});
+}); */
 
 
 module.exports = router;

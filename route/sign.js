@@ -1,5 +1,5 @@
 var express = require('express');
-var db = require("../dbconnect")
+var db = require("../dbconnect");
 var router = express.Router();
 
 router.get('/', function (req, res) { //localhost:3000
@@ -37,7 +37,7 @@ router.get('/login', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-    console.dir(req.body)
+    console.dir(req.body);
     console.log('ㅇㄹ' + req.body);
     var userEmail = req.body.email;
     var password = req.body.pw;
