@@ -8,13 +8,13 @@
     <title>EXIT</title>
     <script src="/static/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="/static/js/examples-base.js"></script>
-    <script type="text/javascript" src="/static/js/highlight.min.js"></script>
     <script type="text/javascript"
         src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/examples-base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
     <script>
         var HOME_PATH = '/static';
     </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -44,32 +44,33 @@
             zoom: 10
         });
 
-        let marker = new naver.maps.Marker({
+        let jnuOptions = {
             position: new naver.maps.LatLng(35.176117, 126.905834),
-            map: map
-        });
-
-        // let contents = [
-        //     '<div class="iw_inner">',
-        //     '<h2>전남대학교</h2>',
-        //     '<p>게시글을 보여줍니다.</p>'
-        // ].join('');
-
-        // let infowindow = new naver.maps.InfoWindow({
-        //     content: contents,
-        //     borderWidth: 1,
-        //     backgroundColor: "#eee",
-        //     anchorColor: "#eee",
-
-        // });
-
-        naver.maps.Event.addListener(marker, "click", function (e) {
-            if (infowindow.getMap()) {
-                infowindow.close();
-            } else {
-                infowindow.open(map, marker);
+            map: map,
+            icon: {
+                url: '/img/jnu-logo.png',
+                size: { width: 50, height: 50 },
+                scaledSize: new naver.maps.Size(50, 50),
+                origin: new naver.maps.Point(0, 0),
+                anchor: new naver.maps.Point(25, 26)
             }
-        });
+        }
+        let jnu = new naver.maps.Marker(jnuOptions);
+
+        axios.get("/location").then(res => {
+            res.data.result.forEach(function (i) {
+                let markerOptions = {
+                    position: new naver.maps.LatLng(result[i].latitude, result[i].longitude),
+                    map: map,
+                    icon: {
+                        url: '',
+                        origin: new naver.maps.Point(0, 0),
+                        anchor: new naver.maps.Point(25, 26)
+                    }
+                }
+                let markers = new naver.maps.Marker(markerOptions)
+            })
+        })
 
         fetch('/api', {
             method: 'get'
