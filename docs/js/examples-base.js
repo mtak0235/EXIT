@@ -1,10 +1,4 @@
 $(document).ready(function() {
-    $("code.snippet").each(function(i, e) {
-        try {
-            hljs.highlightBlock(e);
-        } catch(ignored) {};
-    });
-
     $("#wrap")[0] && $(window).on("load", function() {
         window.setTimeout(function() {
             if (window.map && window.naver && window.naver.maps && map instanceof naver.maps.Map) {
@@ -19,23 +13,5 @@ $(document).ready(function() {
                 });
             }
         }, 0);
-    });
-
-    var snippetEl = $("#snippet"),
-        codeEl = $("#code");
-
-    if (snippetEl.length && codeEl.length) {
-        var pre = $("<pre></pre>"),
-            html = codeEl.text() || codeEl.html();
-
-        pre.text(html);
-
-        snippetEl.append(pre);
-    }
-
-    $("code.snippet").each(function(i, e) {
-        try {
-            hljs.highlightBlock(e);
-        } catch(ignored) {};
     });
 });
