@@ -16,8 +16,9 @@
         var HOME_PATH = '/static';
     </script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-
+p
 <body>
 
     <!-- @category Map --> 
@@ -42,6 +43,7 @@
         var infowindow = new naver.maps.InfoWindow({
         });
 
+    
         function onSuccessGeolocation(position) {
             var location = new naver.maps.LatLng(position.coords.latitude,
                 position.coords.longitude);

@@ -81,7 +81,7 @@ router.post('/', function (req, res, next) {
     console.log(longitude);
     console.log(latitude);
 
-    db.query("insert into board (context,email ,longitude,latitude,create_at,postId) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR),1)", [text, email, longitude, latitude], function (err, rows) {
+    db.query("insert into board (context,email ,longitude,latitude,create_at) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))", [text, email, longitude, latitude], function (err, rows) {
         if (err) {
             console.log(err);
             db.rollback(function (err) {
