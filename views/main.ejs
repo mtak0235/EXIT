@@ -28,8 +28,8 @@
 
 <body class="d-flex flex-column h-100">
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/">Exit</a>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <a class="navbar-brand" href="/"><img alt="exit 로고" src="/static/img/logo.jpg" height="60px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -39,9 +39,6 @@
     </header>
     <div>
         <div id="wrap" class="section" style="display:inline-block;">
-            <img alt="exit 로고" src="/static/img/logo.jpg" height="200px">
-            <p>EXIT는 지역민들을 위한 소셜 네트워크 서비스를 제공합니다.</p>
-
             <div id="map" style="width:1000px;height:500px;"></div>
         </div>
         <iframe src="/read?lat=35.176117&lon=126.905834" frameborder="0" class="iframe" width=400px height=500px></iframe>
@@ -51,20 +48,6 @@
             center: new naver.maps.LatLng(35.176117, 126.905834),
             zoom: 10
         });
-
-        let jnuOptions = {
-            position: new naver.maps.LatLng(35.176117, 126.905834),
-            map: map,
-            icon: {
-                url: '/static/img/jnu-logo.png',
-                size: { width: 50, height: 50 },
-                scaledSize: new naver.maps.Size(50, 50),
-                origin: new naver.maps.Point(0, 0),
-                anchor: new naver.maps.Point(25, 26)
-            }
-        }
-        let jnu = new naver.maps.Marker(jnuOptions);
-
 
         axios.get("/location").then(res => {
             res.data.result.forEach(function (value) {
@@ -76,8 +59,8 @@
                             map: map,
                             icon: {
                                 url: '/static/img/library.png',
-                                size: new naver.maps.Size(50, 52),
-                                scaledSize: new naver.maps.Size(50, 52),
+                                size: new naver.maps.Size(40, 40),
+                                scaledSize: new naver.maps.Size(40, 40),
                                 origin: new naver.maps.Point(0, 0),
                                 anchor: new naver.maps.Point(25, 26)
                             }
@@ -89,8 +72,8 @@
                             map: map,
                             icon: {
                                 url: '/static/img/restaurant.png',
-                                size: new naver.maps.Size(50, 52),
-                                scaledSize: new naver.maps.Size(50, 52),
+                                size: new naver.maps.Size(40, 40),
+                                scaledSize: new naver.maps.Size(40, 40),
                                 origin: new naver.maps.Point(0, 0),
                                 anchor: new naver.maps.Point(25, 26)
                             }
@@ -102,8 +85,8 @@
                             map: map,
                             icon: {
                                 url: '/static/img/convenience.png',
-                                size: new naver.maps.Size(50, 52),
-                                scaledSize: new naver.maps.Size(50, 52),
+                                size: new naver.maps.Size(40, 40),
+                                scaledSize: new naver.maps.Size(40, 40),
                                 origin: new naver.maps.Point(0, 0),
                                 anchor: new naver.maps.Point(25, 26)
                             }
@@ -115,8 +98,8 @@
                             map: map,
                             icon: {
                                 url: '/static/img/cafe.png',
-                                size: new naver.maps.Size(50, 52),
-                                scaledSize: new naver.maps.Size(50, 52),
+                                size: new naver.maps.Size(40, 40),
+                                scaledSize: new naver.maps.Size(40, 40),
                                 origin: new naver.maps.Point(0, 0),
                                 anchor: new naver.maps.Point(25, 26)
                             }
@@ -128,8 +111,8 @@
                             map: map,
                             icon: {
                                 url: '/static/img/animals.png',
-                                size: new naver.maps.Size(50, 52),
-                                scaledSize: new naver.maps.Size(50, 52),
+                                size: new naver.maps.Size(40, 40),
+                                scaledSize: new naver.maps.Size(40, 40),
                                 origin: new naver.maps.Point(0, 0),
                                 anchor: new naver.maps.Point(25, 26)
                             }
