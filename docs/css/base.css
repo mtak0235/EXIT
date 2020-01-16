@@ -1,4 +1,4 @@
-html, body { margin:0;padding:0;font-size:14px;font-family:nanumgothic, "나눔고딕", NanumGothic, "Malgun Gothic", "돋움", Dotum, AppleGothic, Sans-serif; }
+html, body { margin: 5%;padding:0;font-size:14px;font-family:nanumgothic, "나눔고딕", NanumGothic, "Malgun Gothic", "돋움", Dotum, AppleGothic, Sans-serif; align-items: center; }
 h1, h2, h3, h4, h5 { display:block;font-weight:bold;line-height:110%;padding:0 0 5px 0;margin:0; }
 h1 { font-size:30px; }
 h2 { font-size:26px; }
@@ -11,10 +11,12 @@ ul { margin:10px 0 20px 0; }
 li { line-height:120%;margin-bottom:5px; }
 .section { margin:20px auto;padding:0 20px; }
 
-.iw_inner { padding:10px; }
+.iw_inner { padding:20px; }
+.iw_inner h2 { color: #fffaf0; }
 .iw_inner h3 { font-size:16px;font-weight:bold;padding-bottom:5px;margin:10px 0; }
 .iw_inner p { font-size:12px;color:#333; }
 .iw_inner img.thumb { float:right;border:solid 1px #aeaeae; }
+
 
 /* bootstrap */
 img {
@@ -23,3 +25,4 @@ img {
     vertical-align: middle;
     border: 0;
 }
+.nav-item { font-weight:bold;}

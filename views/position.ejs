@@ -1,29 +1,48 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>글쓰기</title>
-    <script src="/static/js/jquery-1.9.1.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/examples-base.js"></script>
-    <script type="text/javascript"
-        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
-    <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <title>EXIT</title>
+        <script src="/static/js/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="/static/js/examples-base.js"></script>
+        <script type="text/javascript"
+            src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
-
-    <!-- @category Map --> 
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+            <a class="navbar-brand" href="/"><img alt="exit 로고" src="/static/img/logo.jpg" height="60px"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse"></div>
+        </nav>
+    </header>
 
     <div id="wrap" class="section">
         <h2>위치 선택하기</h2>
-        <p>글을 작성하고 싶은 위치를 선택하세요.</p>
+        <h4>글을 작성하고 싶은 위치를 선택하세요.</h4>
         <div id="map" style="width:100%;height:600px;"></div>
     </div>
     <script>
@@ -39,6 +58,8 @@
         });
 
         var infowindow = new naver.maps.InfoWindow({
+            backgroundColor: "#696969",
+            anchorColor: "#696969"
         });
 
     
@@ -110,6 +131,19 @@
                 infowindow.open(map, center);
             }
         });
+        fetch('/api', {
+            method: 'get'
+        }).then((res) => {
+            res.json().then(va => {
+                console.log(va)
+                if (va.result) {
+                    document.getElementById("navbarCollapse").innerHTML = '<ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="/write">글쓰기<span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/sign/logout">Log Out</a></li></ul>'
+                } else {
+                    document.getElementById("navbarCollapse").innerHTML =
+                        '<ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="/sign/login">Sign In <span class="sr-only">(current)<span></a></li><li class="nav-item"><a class="nav-link" href="/sign/signup">Sign Up</a></li></ul>'
+                }
+            })
+        })
 
 
     </script>
