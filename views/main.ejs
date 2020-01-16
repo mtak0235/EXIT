@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>EXIT</title>
+    <script src="/static/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/static/js/examples-base.js"></script>
+    <script type="text/javascript"
+        src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script>
+        var HOME_PATH = '../docs';
+    </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="/">Exit</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse"></div>
+        </nav>
+    </header>
+    <div>
+        <div id="wrap" class="section" style="display:inline-block;">
+            <img alt="exit 로고" src="../docs/img/logo.jpg" height="200px">
+            <p>EXIT는 지역민들을 위한 소셜 네트워크 서비스를 제공합니다.</p>
+
+            <div id="map" style="width:1000px;height:500px;"></div>
+        </div>
+        <iframe src="/read?lat=35.176117&lon=126.905834" frameborder="1" class="iframe" width=400px
+            height=500px></iframe>
+    </div>
+    <script>
+        let map = new naver.maps.Map('map', {
+            center: new naver.maps.LatLng(35.176117, 126.905834),
+            zoom: 10
+        });
+
+        let jnuOptions = {
+            position: new naver.maps.LatLng(35.176117, 126.905834),
+            map: map,
+            icon: {
+                url: '/img/jnu-logo.png',
+                size: { width: 50, height: 50 },
+                scaledSize: new naver.maps.Size(50, 50),
+                origin: new naver.maps.Point(0, 0),
+                anchor: new naver.maps.Point(25, 26)
+            }
+        }
+        let jnu = new naver.maps.Marker(jnuOptions);
+
+
+        axios.get("/location").then(res => {
+            res.data.result.forEach(function (value) {
+                let markerOptions
+                console.log("카테고리" + value.category)
+                switch (value.category) {
+                    case 1:
+                        markerOptions = {
+                            position: new naver.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: {
+                                url: HOME_PATH + '/img/library.png',
+                                size: new naver.maps.Size(50, 52),
+                                scaledSize: new naver.maps.Size(50, 52),
+                                origin: new naver.maps.Point(0, 0),
+                                anchor: new naver.maps.Point(25, 26)
+                            }
+                        }
+                        break;
+                    case 2:
+                        markerOptions = {
+                            position: new naver.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: {
+                                url: HOME_PATH + '/img/restaurant.png',
+                                size: new naver.maps.Size(50, 52),
+                                scaledSize: new naver.maps.Size(50, 52),
+                                origin: new naver.maps.Point(0, 0),
+                                anchor: new naver.maps.Point(25, 26)
+                            }
+                        }
+                        break;
+                    case 3:
+                        markerOptions = {
+                            position: new naver.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: {
+                                url: HOME_PATH + '/img/convenience.png',
+                                size: new naver.maps.Size(50, 52),
+                                scaledSize: new naver.maps.Size(50, 52),
+                                origin: new naver.maps.Point(0, 0),
+                                anchor: new naver.maps.Point(25, 26)
+                            }
+                        }
+                        break;
+                    case 4:
+                        markerOptions = {
+                            position: new naver.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: {
+                                url: HOME_PATH + '/img/cafe.png',
+                                size: new naver.maps.Size(50, 52),
+                                scaledSize: new naver.maps.Size(50, 52),
+                                origin: new naver.maps.Point(0, 0),
+                                anchor: new naver.maps.Point(25, 26)
+                            }
+                        }
+                        break;
+                    case 5:
+                        markerOptions = {
+                            position: new naver.maps.LatLng(value.latitude, value.longitude),
+                            map: map,
+                            icon: {
+                                url: HOME_PATH + '/img/animals.png',
+                                size: new naver.maps.Size(50, 52),
+                                scaledSize: new naver.maps.Size(50, 52),
+                                origin: new naver.maps.Point(0, 0),
+                                anchor: new naver.maps.Point(25, 26)
+                            }
+                        }
+                        break;
+                    default:
+                        markerOptions = {
+                            position: new naver.maps.LatLng(value.latitude, value.longitude),
+                            map: map
+                        }
+                        break;
+                }
+                console.log(markerOptions)
+                const marker = new naver.maps.Marker(markerOptions)
+
+                naver.maps.Event.addListener(marker, 'click', (e) => {
+                    console.log(e);
+                    const iframe = document.getElementsByClassName("iframe")[0]
+                    console.log(iframe.src);
+                    iframe.src = `http://localhost:3000/read?lat=${value.latitude}&lon=${value.longitude}`
+                })
+            })
+        }).catch(e => {
+            console.log(e);
+        })
+
+        fetch('/api', {
+            method: 'get'
+        }).then((res) => {
+            res.json().then(va => {
+                console.log(va)
+                if (va.result) {
+                    document.getElementById("navbarCollapse").innerHTML = '<ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="/write">글쓰기<span class="sr-only">(current)</span></a></li><li class="nav-item"><a class="nav-link" href="/sign/logout">Log Out</a></li></ul>'
+                } else {
+                    document.getElementById("navbarCollapse").innerHTML =
+                        '<ul class="navbar-nav mr-auto"><li class="nav-item"><a class="nav-link" href="/sign/login">Sign In <span class="sr-only">(current)<span></a></li><li class="nav-item"><a class="nav-link" href="/sign/signup">Sign Up</a></li></ul>'
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>
