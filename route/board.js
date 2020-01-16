@@ -8,8 +8,9 @@ var os = require("os");
 var fs = require('fs');
 var multer = require('multer');
 var cors = require('cors');
-var pythonShell = require('python-shell');
+var {PythonShell} = require('python-shell');
 var router = express.Router();
+const { spawn } = require('child_process');
 
 //목록
 router.get('/', function (req, res) { //localhost:3000/write 일 때
@@ -58,13 +59,31 @@ function downloadCSV(email, text) {
         } else {
             downloadCSV(email, text);
 
-            var carnum = fs.readFileSync("./route/result.txt", 'utf-8');
+
+let options = {
+    mode: 'text',
+    pythonPath: 'C:/Users/PC/Miniconda3/python',
+    pythonOptions: ['-u'], // get print results in real-time
+    scriptPath: ''
+  };
+
+
+  PythonShell.run('./route/bmw_classifier.py', options, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+
+
+
+    var carnum = fs.readFileSync("./route/result.txt", 'utf-8');
+            
             console.log(carnum);
 
             carnum = parseInt(carnum);
             console.log(carnum)
+            
 
-            db.query("insert into board (context,email ,longitude,latitude,create_at, category) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR), ?)", [text, email, longitude, latitude, carnum], function (err, rows) {
+            db.query("insert into board (context,email ,longitude,latitude,create_at, category,postId) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR), ?,0)", [text, email, longitude, latitude, carnum], function (err, rows) {
                 if (err) {
                     console.log(err);
                     db.rollback(function (err) {
@@ -75,6 +94,13 @@ function downloadCSV(email, text) {
                     return res.status(200).end();
                 }
             });
+
+
+
+            
+  });
+
+            
         }
     });
 

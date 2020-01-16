@@ -27,12 +27,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 var userRouter = require('./route/sign');
 var boardRouter = require('./route/board');
-var noticeRouter = require('./route/notice');
 
 app.use("/", userRouter);
 app.use("/sign", userRouter);
 app.use("/write", boardRouter);
-app.use("/notice", noticeRouter);
 
 app.listen(app.get('port'), function () {
     console.log('Express server listening on port' + app.get('port'));
