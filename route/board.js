@@ -4,9 +4,11 @@ var mysql = require('mysql');
 var database = {};
 var db = require("../dbconnect");
 var path = require('path');
+var os = require("os");
 var fs = require('fs');
 var multer = require('multer');
 var cors = require('cors');
+var pythonShell = require('python-shell');
 var router = express.Router();
 
 //목록
@@ -15,64 +17,31 @@ router.get('/', function (req, res) { //localhost:3000/write 일 때
 });
 
 
-/* //읽기
-router.get('/detail/:postId', function (req, res, next) { //localhost:3000/board/detail/:postId
-    var postId = req.params.postId;
-    console.log("postId : " + postId);
+function downloadCSV(email, text){
 
-    db.query('update post set hit = hit + 1 where postId=?', [postId], function (err) {
-        if (err) {
-            console.log(err);
-            db.rollback(function () {
-                console.error('rollback error1');
-            });
-        }
-        db.query('select postId, postTitle, postContents, genre, DATE_FORMAT(createAt, "%Y %c/%e %r") as createAt, hit, file, userNickname from post, user where userNum = no and postId=?', [postId], function (err, post) {
-            if (err) {
-                console.log(err);
-                db.rollback(function () {
-                    console.error('rollback err2');
-                });
-            }
-            db.query('select commentNo, postId, userNum, contents, DATE_FORMAT(createAt, "%Y % c/%e %r") as createAt, userNickname from comment, user where userNum=no and postId = ?', [postId], function (err, comment) {
-                if (err) {
-                    console.log(err);
-                    db.rollback(function () {
-                        console.error('rollback err3');
-                    });
-                }
-                else {
-                    db.commit(function (err) {
-                        if (err) console.log(err);
-                        console.log("row : " + post);
-                        res.render('detail', { title: post[0].postTitle, post: post, comment: comment, isLogined: req.session.logined });
-                    });
-                }
-            });
-        });
-    }); */
+    var data = text;
 
+   fs.writeFileSync('./route/result1.txt', data, 'utf-8');
 
-    /* //댓글 쓰기
-    router.post('/:postId/process/comment', function (req, res) {
-        var body = req.body;
-        var postId = req.params.postId;
-        var content = req.body.content;
-        var writer = req.session.no;
-
-        db.query('insert into comment (postId, contents, userNum, createAt) values (?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))', [postId, content, writer], function (err, comment) {
-            if (err) throw (err);
-            res.redirect('/board/detail/' + postId);
-        });
-    });
-}); */
-
+    /* 
+    var a =array.email + "," + array.text + "," + array.test + "\r\n";   
+    var downloadLink = document.createElement("a");
+    var blob = new Blob([a], { type: "text/csv;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = "../test/data.csv";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink); 
+    */
 
 
 //데이터베이스에 글 저장
-router.post('/', function (req, res, next) {
+router.post('/', function (req, res) {
     var latitude = req.body.latitude;
     var longitude = req.body.longitude;
+    var nowLatitude = req.body.nowLatitude;
+    var nowLongitude = req.body.nowLongitude;
     var text = req.body.text;
     var email = req.session.email;
 
@@ -81,76 +50,31 @@ router.post('/', function (req, res, next) {
     console.log(longitude);
     console.log(latitude);
 
-    db.query("insert into board (context,email ,longitude,latitude,create_at) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR))", [text, email, longitude, latitude], function (err, rows) {
-        if (err) {
-            console.log(err);
-            db.rollback(function (err) {
-                console.error("rollback error1");
-            });
-        }
-        console.log('정상작동');
-        res.status(200).end();
-    });
-});
+    // 글 작성 가능 거리 범위 재설정
+    // if ((latitude - nowLatitude)^2 >( 0.0015333685)^2 || (longitude - nowLongitude)^2 > (0.0015333685) {
+    if(false){
+        res.status(403).end();
+    } else {
+        downloadCSV(email, text);
 
-/* //수정
-router.get('/edit/:postId', function (req, res, next) {
-    var postId = req.params.postId;
+        var carnum =  fs.readFileSync("./route/result.txt", 'utf-8');
+        console.log(carnum);
+        
+        carnum = parseInt(carnum);
+        console.log(carnum)
 
-    db.query('select postId, postTitle, postContents, file from post where postId = ?', [postId], function (err, rows) {
-        if (err) {
-            console.log(err);
-        }
-        res.render('edit', { postId: postId, rows: rows });
-    });
-
-});
-
-router.post('/edit/:postId', function (req, res, next) {
-    var body = req.body;
-    var postId = req.params.postId;
-    var title = req.body.title;
-    var content = req.body.content;
-    var file = req.body.file;
-
-    db.query('update post set postTitle = ?, postContents = ?, file = ?, createAt = DATE_ADD(NOW(), INTERVAL 9 HOUR) where postId = ?', [title, content, file, postId], function (err, rows) {
-        if (err) {
-            console.log(err);
-        }
-        res.render('edit', { postId: postId, rows: rows });
-        res.redirect('/board/detail/' + postId);
-    });
-});
-
-//삭제
-router.get('/delete/:postId', function (req, res, next) {
-    var postId = req.params.postId;
-
-
-    db.beginTransaction(function (err) {
-        db.query('delete from post where postId = ?', [postId], function (err) {
+        db.query("insert into board (context,email ,longitude,latitude,create_at, category) values(?, ?, ?, ?, DATE_ADD(NOW(), INTERVAL 9 HOUR), ?)", [text, email, longitude, latitude, carnum], function (err, rows) {
             if (err) {
                 console.log(err);
                 db.rollback(function (err) {
-                    console.error('rollback error1');
+                    console.error("rollback error1");
                 });
+            } else {
+                console.log('정상작동');
+               return  res.status(200).end();
             }
-            db.query('ALTER TABLE post AUTO_INCREMENT=1');
-            db.query('SET @COUNT = 0');
-            db.query('UPDATE post SET postId = @COUNT:=@COUNT+1', function (err, rows) {
-                if (err) {
-                    console.log(err);
-                    db.rollback(function (err) {
-                        console.error('rollback error2');
-                    });
-                }
-                else {
-                    res.redirect('/board');
-                }
-            });
         });
-    });
-}); */
-
+    }
+});
 
 module.exports = router;
