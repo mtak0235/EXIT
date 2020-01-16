@@ -7,6 +7,21 @@ router.get('/', function (req, res) { //localhost:3000
     console.log(req.session);
 });
 
+router.get("/api", (req,res)=>{
+    if(req.session.logined){
+       return  res.send({result:true})
+    }
+    return res.send({result:false})
+})
+
+router.get("/location", (req, res)=>{
+    db.query('select category, latitude, longitude from board', (err, rows)=>{
+        console.log(err);
+        console.log(rows);
+        res.send({result: rows})
+    })
+})
+
 //////회원가입
 //라우팅 함수 등록
 router.get('/signup', function (req, res) {

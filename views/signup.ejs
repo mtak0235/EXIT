@@ -1,55 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>회원가입</title>
-  
-  <script src="../docs/js/jquery-1.9.1.js"></script>
-  <script type="text/javascript" src="../docs/js/examples-base.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="../docs/css/base.css" />
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/bootstrap.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>EXIT</title>
+  <script src="/static/js/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="/static/js/examples-base.js"></script>
+  <script type="text/javascript"
+    src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script>
+    var HOME_PATH = '/static';
+  </script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
-<body>
-    <div id="wrap" class="section">
+<body class="d-flex flex-column h-100">
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">Exit</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse"></div>
+    </nav>
+  </header>
+  <div id="wrap" class="section">
     <h2>회원 가입</h2>
     <form accept-charset="urf-8" name="personal_info" method="post">
-        <fieldset style="width:300px">
-            <legend style="text-align:center;">개인정보입력</legend>
-            <table class="table">
-            <tr><td>이름</td> <td><input type="text" name="name" required></td></tr>
-            <tr><td>이메일</td><td><input type="email" name="email" requqired></td></tr>
-            <tr><td>PW</td> <td><input type="password" name="pw" required></td></tr>
-            <tr><td>PW 확인</td> <td><input type="password" name="pwCheck" required></td></tr>
-             <tr><td>별명</td><td><input type="text" name="nickname"></td></tr>
-            <tr><td>전화번호</td><td><input type="tel" name="phone"></td></tr>
-            </table>
-        </fieldset><br><br>
-            <input type="submit" value="확인">
-            <input type="reset" value="취소">
-        </form>
-      </div>
+      <fieldset style="width:300px">
+        <legend style="text-align:center;">개인정보입력</legend>
+        <table class="table">
+          <tr>
+            <td>이름</td>
+            <td><input type="text" name="name" required></td>
+          </tr>
+          <tr>
+            <td>이메일</td>
+            <td><input type="email" name="email" requqired></td>
+          </tr>
+          <tr>
+            <td>PW</td>
+            <td><input type="password" name="pw" required></td>
+          </tr>
+          <tr>
+            <td>PW 확인</td>
+            <td><input type="password" name="pwCheck" required></td>
+          </tr>
+          <tr>
+            <td>별명</td>
+            <td><input type="text" name="nickname"></td>
+          </tr>
+          <tr>
+            <td>전화번호</td>
+            <td><input type="tel" name="phone"></td>
+          </tr>
+        </table>
+      </fieldset><br><br>
+      <input type="submit" value="확인">
+      <input type="reset" value="취소">
+    </form>
+  </div>
 
-        <script>
-            var send_array = Array();
-            var send_cnt = 0;
-            var chkbox = $(".checkSelect");
-        
-            for (i = 0; i < chkbox.length; i++) {
-              if (chkbox[i].checked == true) {
-                send_array[send_cnt] = chkbox[i].value;
-                send_cnt++;
-              }
-            }
-        
-            $("#array").val(send_array);
-        </script>
+  <script>
+    var send_array = Array();
+    var send_cnt = 0;
+    var chkbox = $(".checkSelect");
+
+    for (i = 0; i < chkbox.length; i++) {
+      if (chkbox[i].checked == true) {
+        send_array[send_cnt] = chkbox[i].value;
+        send_cnt++;
+      }
+    }
+
+    $("#array").val(send_array);
+  </script>
 
 </body>
 

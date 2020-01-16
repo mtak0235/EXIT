@@ -29,12 +29,6 @@ var userRouter = require('./route/sign');
 var boardRouter = require('./route/board');
 var noticeRouter = require('./route/notice');
 
-app.get("/api", (req,res)=>{
-    if(req.session.logined){
-       return  res.send({result:true})
-    }
-    return res.send({result:false})
-})
 app.use("/", userRouter);
 app.use("/sign", userRouter);
 app.use("/write", boardRouter);
