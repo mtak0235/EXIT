@@ -57,7 +57,7 @@
         }
         let jnu = new naver.maps.Marker(jnuOptions);
 
-        axios.get("/location").then(res => {
+        axios.get("/location").then(res => { // /location 경로가 뭐죠??
             res.data.result.forEach(function (i) {
                 let markerOptions = {
                     position: new naver.maps.LatLng(result[i].latitude, result[i].longitude),

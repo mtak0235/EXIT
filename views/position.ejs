@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>글쓰기</title>
     <script src="/static/js/jquery-1.9.1.js"></script>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/examples-base.js"></script>
     <script type="text/javascript"
         src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama"></script>
@@ -18,7 +18,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-p
+
 <body>
 
     <!-- @category Map --> 
@@ -76,11 +76,13 @@ p
                 infowindow.setPosition(location);
                 infowindow.setContent('<div class="iw_inner"><h2>글을 작성하세요.</h2><textarea id="text" rows="7" cols="60"></textarea><br><button id="write" type="submit">저장</button></div>');
                 infowindow.open(map);
-                document.getElementById("write").addEventListener("click",(e)=>{
+                document.getElementById("write").addEventListener("click",()=>{
                    
                     axios.post("/write",{ 
                         latitude : lat,
                         longitude : lng,
+                        nowLongitude : e.coord.lng(),
+                        nowLatitude : e.coord.lat(),
                         text : document.getElementById('text').value
                     }).then(res =>{
                         alert("등록 성공");  
