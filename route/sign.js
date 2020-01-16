@@ -115,23 +115,17 @@ router.get('/read', function (req, res, next) {
     var po_lat = req.query.lat;        //req.body.latitude;
     var context;
 
-    var main_board = db.query('select context,email,latitude,longitude from board ', function(err, rows) {
+    var main_board = db.query("select context,email,latitude,longitude from board where latitude = ? and longitude = ?", [po_lat, po_lon], function(err, rows) {
         if(err) console.log(err);
         var  result =[];
-        for (i=0; i<rows.length ; i++){
-
-            var latitude = rows[i].latitude;
-            var longitude = rows[i].longitude;       
-            if ( (latitude-po_lat)^2+(longitude-po_lon)^2<(0.0015333685)^2){
-
+        for (i=0; i<rows.length ; i++){    
                 result.push({
                     context:rows[i].context,
                     email:rows[i].email
                 });
-               
-            }
+
         }       
-        res.render('read', {title:'내위치 주변의 게시글',rows:result});
+        res.render('read', {title:'게시판',rows:result});
 
     });
 });
