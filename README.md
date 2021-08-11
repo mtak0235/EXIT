@@ -42,6 +42,7 @@ Code sharing: Github, Slack
 ## 개발 환경 및 언어
 * Node.js
 * HTML, CSS, Javascript
+* Python
 
 ## 배포
 로컬 서버
