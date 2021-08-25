@@ -126,9 +126,7 @@ router.get('/read', function (req, res, next) {
 
         }       
         res.render('read', {title:'게시판',rows:result});
-
     });
 });
-
 
 module.exports = router;
