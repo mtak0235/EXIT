@@ -19,14 +19,12 @@ $(document).ready(function() {
             }
         }, 0);
     });
-
     var snippetEl = $("#snippet"),
         codeEl = $("#code");
-
+    
     if (snippetEl.length && codeEl.length) {
         var pre = $("<pre></pre>"),
             html = codeEl.text() || codeEl.html();
-
         // pre.text(html);
         if ((document.documentMode && document.documentMode <= 8) ||
             (navigator.userAgent.toLowerCase().indexOf('msie 8') > -1)) {
@@ -34,7 +32,6 @@ $(document).ready(function() {
         } else {
             pre.text(html);
         }
-
         snippetEl.append(pre);
     }
 });
