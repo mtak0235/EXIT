@@ -1,6 +1,4 @@
 var mysql = require('mysql');
-
-
 var db = mysql.createConnection({
    host: '안알려줄 예정',
    user: 'luda',
@@ -13,5 +11,3 @@ db.connect((err) => {
    console.log("성공");
 })
 module.exports = db;
-   
- 
